@@ -13,10 +13,11 @@ const app = express();
 const ServerStart=()=>{
     
     const port = process.env.PORT || 443;
+    console.log("Puerto base",port,process.env.PORT)
     const whiteList=['http://localhost:3000','https://localhost:3000','http://localhost:3001',undefined];
     const privateKey = fs.readFileSync(path.join(__dirname, '../public/certificates/private-key.pem'), 'utf8');
     const certificate = fs.readFileSync(path.join(__dirname, '../public/certificates/public-cert.pem'), 'utf8');
-    const credentials = { key: privateKey, cert: certificate };
+    
     //connectDB();
     const corsOptions:CorsOptions = {
       origin: function (origin:any, callback:any) {
@@ -45,9 +46,10 @@ const ServerStart=()=>{
       res.sendFile(path.join(__dirname,'../public/build/index.html'))
     })
     
-    const httpsServer = https.createServer(credentials, app);
-    httpsServer.listen(port, () => {
-      console.log(`Servidor HTTPS en ejecución en el puerto ${port}`);
+    //const httpsServer = https.createServer({ key: privateKey, cert: certificate }, app);
+    //httpsServer.listen(port, () => {
+    app.listen(port, () => {
+        console.log(`Servidor HTTPS en ejecución en el puerto ${port}`);
     });
     
 }
