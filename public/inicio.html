@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login con Google</title>
+    <button onclick="oauthSignIn()">Iniciar</button>
+    <script src="https://accounts.google.com/gsi/client" async></script>
+</head>
+<body>
+    <h1>Login con Google</h1>
+    <div id="g_id_onload"
+        data-client_id="41867747751-ln9nkk8l2gj07c7qmja6opns67f49n46.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-login_uri="http://localhost:3000"
+        data-callback="iniciarBoton"
+        data-auto_prompt="false">
+    </div>
+    <button onclick="">A</button>
+    <div id="btn_google">
+    <div class="g_id_signin"
+        data-type="standard"
+        data-shape="pill"
+        data-theme="outline"
+        data-text="signin_with"
+        data-size="medium"
+        data-logo_alignment="left">
+    </div>
+    </div>
+    <script>
+        function iniciarBoton(e) {
+            iniciar(e.credential)
+        }   
+
+        function iniciar(tk,tipo=false){
+            console.log(tk);
+            fetch('http://localhost:3000/api/google',
+            {
+            method: "POST",
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({"id_token":tk,"oauth":tipo})
+            })
+            .then(function(res){ return res.json();})
+            .then(function(data){console.log(JSON.stringify(data))})
+            .catch(console.warn)
+        }  
+
+        function oauthSignIn() {
+        // Google's OAuth 2.0 endpoint for requesting an access token
+        var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+        // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+        var form = document.createElement('form');
+        form.setAttribute('method', 'GET'); // Send as a GET request.
+        form.setAttribute('action', oauth2Endpoint);
+
+        // Parameters to pass to OAuth 2.0 endpoint.
+        var params = {'client_id': '41867747751-ln9nkk8l2gj07c7qmja6opns67f49n46.apps.googleusercontent.com',
+                        'redirect_uri': 'http://localhost:3000/inicio.html',
+                        'response_type': 'token',
+                        'scope': 'https://www.googleapis.com/auth/userinfo.profile  https://www.googleapis.com/auth/userinfo.email',
+                        'state': 'pass-through value'};
+
+        // Add form parameters as hidden input values.
+        for (var p in params) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', p);
+            input.setAttribute('value', params[p]);
+            form.appendChild(input);
+        }
+
+        // Add form to page and submit it to open the OAuth 2.0 endpoint.
+        document.body.appendChild(form);
+        form.submit();
+        // After authentication, you can use JavaScript to redirect to 'inicio.html'
+        }  
+
+        function getAccessToken() {
+            var accessToken = null;
+            var hash = window.location.hash.substr(1);
+            var hashParams = hash.split('&');
+            
+            for (var i = 0; i < hashParams.length; i++) {
+                var param = hashParams[i].split('=');
+                console.log(param[1]);
+                if (param[0] === 'access_token') {
+                    accessToken = param[1];
+                    break;
+                }
+            }
+
+            return accessToken;
+        }
+
+        // Llama a la función para obtener el token de acceso
+        var token = getAccessToken();
+        
+        // Verifica si se ha obtenido un token de acceso
+        if (token) {
+            // Haz algo con el token, por ejemplo, mostrarlo en la consola
+            iniciar(token,true);
+            // Puedes realizar más acciones, como enviar el token al servidor, etc.
+        } else {
+            // No se encontró un token de acceso, maneja el caso en consecuencia
+            console.log('No se encontró un token de acceso.');
+        }
+      </script>
+    </script>
+</body>
+</html>
