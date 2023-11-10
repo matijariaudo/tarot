@@ -38,7 +38,7 @@ dotenv.config();
 var app = (0, express_1.default)();
 exports.app = app;
 var ServerStart = function () {
-    var port = process.env.PORT;
+    var port = process.env.PORT || 443;
     var whiteList = ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3001', undefined];
     var privateKey = fs.readFileSync(path_1.default.join(__dirname, '../public/certificates/private-key.pem'), 'utf8');
     var certificate = fs.readFileSync(path_1.default.join(__dirname, '../public/certificates/public-cert.pem'), 'utf8');

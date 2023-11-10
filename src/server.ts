@@ -12,7 +12,7 @@ const app = express();
 
 const ServerStart=()=>{
     
-    const port = process.env.PORT;
+    const port = process.env.PORT || 443;
     const whiteList=['http://localhost:3000','https://localhost:3000','http://localhost:3001',undefined];
     const privateKey = fs.readFileSync(path.join(__dirname, '../public/certificates/private-key.pem'), 'utf8');
     const certificate = fs.readFileSync(path.join(__dirname, '../public/certificates/public-cert.pem'), 'utf8');
