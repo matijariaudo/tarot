@@ -21,7 +21,7 @@ const ServerStart=()=>{
     connectDB();
     const corsOptions:CorsOptions = {
       origin: function (origin:any, callback:any) {
-        console.log("Origen:",origin,whiteList.indexOf(origin))
+        console.log("Origen:",origin,whiteList.indexOf(origin),whiteList.indexOf("https://tarotai-5crc.onrender.com"))
         if (origin?whiteList.indexOf(origin)!== -1:true) {
           // Permite la solicitud si el origen está en la lista blanca o si no se especifica un origen (ej. solicitud local)
           callback(null, true);

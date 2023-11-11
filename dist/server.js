@@ -41,13 +41,13 @@ exports.app = app;
 var ServerStart = function () {
     var port = process.env.PORT || 443;
     console.log("Puerto base", port, process.env.PORT);
-    var whiteList = ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3001', undefined];
+    var whiteList = ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3001', 'https://tarotai-5crc.onrender.com', undefined];
     var privateKey = fs.readFileSync(path_1.default.join(__dirname, '../public/certificates/private-key.pem'), 'utf8');
     var certificate = fs.readFileSync(path_1.default.join(__dirname, '../public/certificates/public-cert.pem'), 'utf8');
     (0, connectionBd_1.default)();
     var corsOptions = {
         origin: function (origin, callback) {
-            console.log("Origen:", origin, whiteList.indexOf(origin));
+            console.log("Origen:", origin, whiteList.indexOf(origin), whiteList.indexOf("https://tarotai-5crc.onrender.com"));
             if (origin ? whiteList.indexOf(origin) !== -1 : true) {
                 // Permite la solicitud si el origen está en la lista blanca o si no se especifica un origen (ej. solicitud local)
                 callback(null, true);
