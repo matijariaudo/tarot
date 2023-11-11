@@ -14,7 +14,7 @@ const ServerStart=()=>{
     
     const port = process.env.PORT || 443;
     console.log("Puerto base",port,process.env.PORT)
-    const whiteList=['http://localhost:3000','https://localhost:3000','http://localhost:3001',undefined];
+    const whiteList=['http://localhost:3000','https://localhost:3000','http://localhost:3001','https://tarotai-5crc.onrender.com',undefined];
     const privateKey = fs.readFileSync(path.join(__dirname, '../public/certificates/private-key.pem'), 'utf8');
     const certificate = fs.readFileSync(path.join(__dirname, '../public/certificates/public-cert.pem'), 'utf8');
     
