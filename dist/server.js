@@ -30,6 +30,7 @@ exports.app = exports.ServerStart = void 0;
 var express_1 = __importDefault(require("express"));
 var path_1 = __importDefault(require("path"));
 var cors_1 = __importDefault(require("cors"));
+var connectionBd_1 = __importDefault(require("./connectionBd"));
 var router_1 = __importDefault(require("./router"));
 var fs = require('fs');
 var https = require('https');
@@ -43,7 +44,7 @@ var ServerStart = function () {
     var whiteList = ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3001', undefined];
     var privateKey = fs.readFileSync(path_1.default.join(__dirname, '../public/certificates/private-key.pem'), 'utf8');
     var certificate = fs.readFileSync(path_1.default.join(__dirname, '../public/certificates/public-cert.pem'), 'utf8');
-    //connectDB();
+    (0, connectionBd_1.default)();
     var corsOptions = {
         origin: function (origin, callback) {
             console.log("Origen:", origin, whiteList.indexOf(origin));
